@@ -5,7 +5,7 @@ class Search {
     this.query = query;
   }
 
-  async getResults(query) {
+  async getResults() {
     const key = '75f5a247a695f874d3c6da3d9b65b1c6';
     try {
       const res = await axios(
