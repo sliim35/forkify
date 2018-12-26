@@ -34,3 +34,15 @@ function submitHandler(e) {
   e.preventDefault();
   searchCtrl();
 }
+
+elements.searchResPages.addEventListener('click', onClickHandler);
+
+function onClickHandler(e) {
+  const btn = e.target.closest('.btn-inline');
+
+  if (btn) {
+    const goToPage = parseInt(btn.dataset.goto);
+    searchView.clearResults();
+    searchView.renderResults(state.search.result, goToPage);
+  }
+}
