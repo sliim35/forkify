@@ -1,4 +1,5 @@
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import * as searchView from './views/searchView';
 import { elements, renderLoader, clearLoader } from './views/base';
 
@@ -46,3 +47,6 @@ function onClickHandler(e) {
     searchView.renderResults(state.search.result, goToPage);
   }
 }
+
+const recipe = new Recipe(46956);
+recipe.getRecipe();
