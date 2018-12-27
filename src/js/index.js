@@ -12,6 +12,9 @@ import { elements, renderLoader, clearLoader } from './views/base';
  */
 const state = {};
 
+/**
+ * Search Ctrl
+ */
 const searchCtrl = async () => {
   const query = searchView.getInput();
 
@@ -29,16 +32,31 @@ const searchCtrl = async () => {
   }
 };
 
-elements.searchForm.addEventListener('submit', submitHandler);
+/**
+ * Recipe Ctrl
+ */
+const recipeCtrl = async () => {
+  const id = window.location.hash.replace('#', '');
 
-function submitHandler(e) {
+  if (id) {
+    state.recipe = new Recipe(id);
+    await state.recipe.getRecipe();
+    state.recipe.calcTime();
+    state.recipe.calcServing();
+
+    console.log(state.recipe);
+  }
+}
+
+/**
+ * Event listeners
+ */
+function onSearchFormSubmitHandler(e) {
   e.preventDefault();
   searchCtrl();
 }
 
-elements.searchResPages.addEventListener('click', onClickHandler);
-
-function onClickHandler(e) {
+function onPaginationButtonClickHandler(e) {
   const btn = e.target.closest('.btn-inline');
 
   if (btn) {
@@ -48,5 +66,6 @@ function onClickHandler(e) {
   }
 }
 
-const recipe = new Recipe(46956);
-recipe.getRecipe();
+elements.searchForm.addEventListener('submit', onSearchFormSubmitHandler);
+elements.searchResPages.addEventListener('click', onPaginationButtonClickHandler);
+['hashchange', 'load'].map(event => window.addEventListener(event, recipeCtrl));
